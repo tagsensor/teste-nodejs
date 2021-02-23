@@ -29,15 +29,15 @@ async function listaTodosCcusto(ctrl, Fin_cc) {
 
 async function createFin_cc(ctrl, Fin_cc) {
     const conn = await conectar(ctrl);
-    const sql = "INSERT INTO fin_cc(ativo, cd_cc, custo, gastos, id_ccsub, nome, tipo, versao) VALUES (?,?,?,?,?,?,?,?)";;
+    const sql = "INSERT INTO fin_cc(ativo, cd_cc, custo, gastos, id_ccsub, nome, tipo, versao) VALUES (?,?,?,?,?,?,?,?)";
     const [rows] = await conn.query(sql, [
-        (Fin_cc.ativo),
-        (Fin_cc.cd_cc),
-        (Fin_cc.custo),
+        Fin_cc.ativo,
+        Fin_cc.cd_cc,
+        Fin_cc.custo,
         parseInt(Fin_cc.gastos),
         parseInt(Fin_cc.id_ccsub),
-        (Fin_cc.nome),
-        (Fin_cc.tipo),
+        Fin_cc.nome,
+        Fin_cc.tipo,
         parseInt(Fin_cc.versao),
     ]);
     conn.end();
@@ -45,7 +45,7 @@ async function createFin_cc(ctrl, Fin_cc) {
 
 async function readFin_cc(ctrl, Fin_cc) {
     const conn = await conectar(ctrl);
-    const sql = "SELECT ativo, cd_cc, custo, gastos, id_cc, id_ccsub, nome, tipo, versao FROM fin_cc WHERE id_cc = ?";;
+    const sql = "SELECT ativo, cd_cc, custo, gastos, id_cc, id_ccsub, nome, tipo, versao FROM fin_cc WHERE id_cc = ?";
     const [rows] = await conn.query(sql, [Fin_cc.id_cc, ]);
     conn.end();
     return rows && rows.length > 0 ? rows[0] : {};
@@ -53,7 +53,7 @@ async function readFin_cc(ctrl, Fin_cc) {
 
 async function buscaNomeCC(ctrl, Fin_cc) {
     const conn = await conectar(ctrl);
-    const sql = "SELECT ativo, cd_cc, custo, gastos, id_cc, id_ccsub, nome, tipo, versao FROM fin_cc WHERE nome = ?";;
+    const sql = "SELECT ativo, cd_cc, custo, gastos, id_cc, id_ccsub, nome, tipo, versao FROM fin_cc WHERE nome = ?";
     const [rows] = await conn.query(sql, [Fin_cc.nome, ]);
     conn.end();
     return rows && rows.length > 0 ? rows[0] : {};
