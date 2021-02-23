@@ -13,7 +13,7 @@ function conectar(ctrl) {
 
 async function createCont_ana(ctrl, Cont_ana) {
     const conn = await conectar(ctrl);
-    const sql = "INSERT INTO cont_ana(descricao, docs, dt_lanc, estabelecimento, id_cont_ana, tipo, versao) VALUES (?,?,?,?,?,?,?)";;
+    const sql = "INSERT INTO cont_ana(descricao, docs, dt_lanc, estabelecimento, id_cont_ana, tipo, versao) VALUES (?,?,?,?,?,?,?)";
     const [rows] = await conn.query(sql, [
         Cont_ana.descricao,
         Cont_ana.docs,
@@ -28,7 +28,7 @@ async function createCont_ana(ctrl, Cont_ana) {
 
 async function readCont_ana(ctrl, Cont_ana) {
     const conn = await conectar(ctrl);
-    const sql = "SELECT descricao, docs, dt_lanc, estabelecimento, id_cont_ana, tipo, versao FROM cont_ana WHERE id_cont_ana = ?";;
+    const sql = "SELECT descricao, docs, dt_lanc, estabelecimento, id_cont_ana, tipo, versao FROM cont_ana WHERE id_cont_ana = ?";
     const [rows] = await conn.query(sql, [Cont_ana.id_cont_ana, ]);
     conn.end();
     return rows && rows.length > 0 ? rows[0] : {};
