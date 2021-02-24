@@ -61,6 +61,20 @@ async function deleteCont_ana(ctrl, Cont_ana) {
     conn.end();
 }
 
+async function maxCont_ana(ctrl) {
+    const conn = await conectar(ctrl);
+    const sql = "SELECT Max(id_cont_ana) AS max_pk  FROM cont_ana";
+    const [rows] = await conn.query(sql);
+    conn.end();
+    let pk;
+    if (rows[0].max_pk === null) {
+        pk = 0;
+    } else {
+        pk = parseInt(rows[0].max_pk);
+    }
+    return pk;
+}
+
 async function listaAna(ctrl, Cont_ana) {
     const conn = await conectar(ctrl);
     const sql = "SELECT descricao, docs, dt_lanc, estabelecimento, id_cont_ana, tipo, versao FROM cont_ana order by dt_lanc desc";
@@ -69,4 +83,4 @@ async function listaAna(ctrl, Cont_ana) {
     return rows;
 }
 
-module.exports = { createCont_ana, readCont_ana, updateCont_ana, deleteCont_ana, listaAna, }
+module.exports = { createCont_ana, readCont_ana, updateCont_ana, deleteCont_ana, maxCont_ana, listaAna, }
