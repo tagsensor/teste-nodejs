@@ -6,7 +6,8 @@ function conectar(ctrl) {
         port: ctrl.port,
         user: ctrl.user,
         password: ctrl.pass,
-        database: ctrl.db
+        database: ctrl.db,
+        charset: 'utf8'
     });
     return conn;
 }

@@ -6,7 +6,8 @@ function conectar(ctrl) {
         port: ctrl.port,
         user: ctrl.user,
         password: ctrl.pass,
-        database: ctrl.db
+        database: ctrl.db,
+        charset: 'utf8'
     });
     return conn;
 }
@@ -51,6 +52,35 @@ async function readFin_cc(ctrl, Fin_cc) {
     return rows && rows.length > 0 ? rows[0] : {};
 }
 
+async function updateFin_cc(ctrl, Fin_cc) {
+    const conn = await conectar(ctrl);
+    const sql = "UPDATE fin_cc SET ativo=?, cd_cc=?, custo=?, gastos=?, id_cc=?, id_ccsub=?, nome=?, tipo=?, versao=? WHERE id_cc = ? AND versao = ?";
+    const [rows] = await conn.query(sql, [
+        Fin_cc.ativo,
+        Fin_cc.cd_cc,
+        Fin_cc.custo,
+        parseInt(Fin_cc.gastos),
+        parseInt(Fin_cc.id_cc),
+        parseInt(Fin_cc.id_ccsub),
+        Fin_cc.nome,
+        Fin_cc.tipo,
+        parseInt(Fin_cc.versao + 1),
+        parseInt(Fin_cc.id_cc),
+        parseInt(Fin_cc.versao),
+    ]);
+    conn.end();
+}
+
+async function deleteFin_cc(ctrl, Fin_cc) {
+    const conn = await conectar(ctrl);
+    const sql = "DELETE FROM fin_cc WHERE id_cc = ? AND versao = ?";
+    const [rows] = await conn.query(sql, [
+        parseInt(Fin_cc.id_cc),
+        parseInt(Fin_cc.versao),
+    ]);
+    conn.end();
+}
+
 async function buscaNomeCC(ctrl, Fin_cc) {
     const conn = await conectar(ctrl);
     const sql = "SELECT ativo, cd_cc, custo, gastos, id_cc, id_ccsub, nome, tipo, versao FROM fin_cc WHERE nome = ?";
@@ -67,4 +97,4 @@ async function listaLike(ctrl, Fin_cc) {
     return rows;
 }
 
-module.exports = { listaCcusto, listaTodosCcusto, createFin_cc, readFin_cc, buscaNomeCC, listaLike, }
+module.exports = { listaCcusto, listaTodosCcusto, createFin_cc, readFin_cc, updateFin_cc, deleteFin_cc, buscaNomeCC, listaLike, }
