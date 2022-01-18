@@ -41,7 +41,21 @@ async function insertClasse(req, res) {
         await db.insertEstClasse(ctrl, req.body);
         res.json({ message: 'classe cadastrada com sucesso' });
     } catch (error) {
-        res.status(500).json({ erro: error });
+        //res.status(500).json({ erro: error}); retorna uma série de informações
+        /*
+        {
+            "erro": {
+                "message": "Número de código Já existe",
+                "code": "ER_SIGNAL_EXCEPTION",
+                "errno": 1644,
+                "sqlState": "45000",
+                "sqlMessage": "Número de código Já existe"
+            }
+        }
+        */
+        // retorna apenas "message": "Número de código Já existe", tendo em vista que o front end está
+        //pronto pra imprimir apenas a mensagem de erro
+        res.status(500).json({ erro: error.message}); 
     }
 };
 async function updateClasse(req, res) {

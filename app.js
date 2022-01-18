@@ -9,6 +9,15 @@ app.use(express.json()); //usando o parser do express, substitue o bodyParser a 
 //app.use(bodyParser.urlencoded({ extended: true }));
 //app.use(bodyParser.json());
 
+//colocar a qui o midlwere de autenticação JWT, se o tempo de expiração poder ser modificado
+//ou gerar um token com UUID
+/*
+function auth (rec, res, next){
+    const authorization = req.header('authorization');
+    next;
+}
+ */
+
 app.use('/',require('./router/ClassesRt'));
 app.use('/',require('./router/CcustosRt'));
 app.use('/',require('./router/ContaAnaRt'));
